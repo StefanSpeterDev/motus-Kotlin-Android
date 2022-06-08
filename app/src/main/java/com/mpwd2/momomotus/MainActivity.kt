@@ -22,10 +22,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.mpwd2.momomotus.ui.pages.game.GameScreen
 import com.mpwd2.momomotus.ui.pages.home.*
 import com.mpwd2.momomotus.ui.pages.profile.ProfileScreen
 import com.mpwd2.momomotus.ui.theme.MomomotusTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     val items = listOf(

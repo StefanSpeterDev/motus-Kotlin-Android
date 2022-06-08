@@ -83,9 +83,12 @@ fun buildTextColumn(color: Color, title: String, description: String) {
 
 @Composable
 fun buildLastGames() {
+    val scrollState = rememberScrollState();
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
+            //.verticalScroll(scrollState)
+
     ) {
         items(10) { index ->
             Column {
