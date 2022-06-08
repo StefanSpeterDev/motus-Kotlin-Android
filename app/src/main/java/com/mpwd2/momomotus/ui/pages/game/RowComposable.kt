@@ -31,8 +31,18 @@ fun RowComposable() {
                     .border(BorderStroke(2.dp, Color.Black))
                     .padding(5.dp)
             ) {
-                state.data.name.forEach { _ -> InputComposable(state = state, modifier = Modifier.weight(1f).aspectRatio(1f)
-                    ) }
+                // Génère les input correspondant au mot choisi
+                state.data.name.forEach { _ ->
+                    InputComposable(
+                        state = state,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(10.dp)
+                            .aspectRatio(1f)
+                            .border(BorderStroke(2.dp, Color.Red))
+                            .padding(10.dp)
+                    )
+                }
             }
         }
     } else if (state is State.Loading) {
