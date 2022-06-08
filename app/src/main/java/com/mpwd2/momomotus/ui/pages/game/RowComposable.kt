@@ -27,20 +27,18 @@ fun RowComposable() {
             x++;
             Row(
                 modifier = Modifier
-                    .padding(5.dp)
                     .border(BorderStroke(2.dp, Color.Black))
-                    .padding(5.dp)
             ) {
                 // Génère les input correspondant au mot choisi
-                state.data.name.forEach { _ ->
+                state.data.name.forEachIndexed { index, it ->
                     InputComposable(
+                        letter = it.toString(),
                         state = state,
                         modifier = Modifier
                             .weight(1f)
-                            .padding(10.dp)
                             .aspectRatio(1f)
-                            .border(BorderStroke(2.dp, Color.Red))
-                            .padding(10.dp)
+                            .border(BorderStroke(2.dp, Color.Red)),
+                        index = index,
                     )
                 }
             }
