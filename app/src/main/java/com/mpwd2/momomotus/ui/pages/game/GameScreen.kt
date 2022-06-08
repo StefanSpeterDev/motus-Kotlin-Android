@@ -47,3 +47,11 @@ fun GameScreen() {
         }
     }
 }
+
+/*
+    Chaque lettre = un textfield avec une maxlength = 1
+    Gérer le focus
+    Sur le input fonction qui regarde si on est last, sinon continuer au prochain input
+    Chaque textfield possède un state (init, vide, invalide, valide, isOk, isOkButWrongPlace)
+*/
+
