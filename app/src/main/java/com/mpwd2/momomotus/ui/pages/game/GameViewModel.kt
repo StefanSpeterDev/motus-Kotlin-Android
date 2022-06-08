@@ -23,19 +23,36 @@ class GameViewModel @Inject constructor(private val repository: WordRepository) 
 
     private val mState = MutableStateFlow<State<Word>>(State.loading())
 
+    private lateinit var motATrouve : String
+
     val state: StateFlow<State<Word>>
         get() = mState
+
+    var currentWord: String = "";
 
     private fun getWordOfTheDay() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 repository.getRandomWord().collect {
+                    motATrouve = it.name
                     mState.value = State.success(it)
                 }
             } catch (ex: Exception) {
                 mState.value = State.failed(ex.localizedMessage)
             }
         }
+    }
+
+    fun checkWord() {
+        // Check si le mot est trouvé
+        if(mState.value is State.Success) {
+            if(currentWord == motATrouve) {
+                println("Found it!")
+            }
+        }
+        // Check si une lettre est bonne
+
+        // Ignore sinon
     }
 
 }

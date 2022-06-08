@@ -36,10 +36,19 @@ fun RowComposable() {
                         state = state,
                         modifier = Modifier
                             .weight(1f)
-                            .aspectRatio(1f)
-                            .border(BorderStroke(2.dp, Color.Red)),
+                            .aspectRatio(1f),
                         index = index,
-                    )
+                    ) {
+                        if(index >= viewModel.currentWord.length) {
+                            viewModel.currentWord = viewModel.currentWord.plus(it);
+                        }
+                        println(viewModel.currentWord);
+
+                        if(state.data.name.length - 1 == index) {
+                            println("Next line")
+                           viewModel.checkWord();
+                        }
+                    }
                 }
             }
         }
