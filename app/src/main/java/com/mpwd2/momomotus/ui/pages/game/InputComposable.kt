@@ -1,9 +1,7 @@
 package com.mpwd2.momomotus.ui.pages.game
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
+import android.util.Log
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.CircularProgressIndicator
@@ -18,27 +16,49 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mpwd2.momomotus.data.entities.State
 import com.mpwd2.momomotus.data.entities.Word
 
 @Composable
-fun InputComposable(state: State<Word>, modifier: Modifier) {
+fun InputComposable(state: State<Word>, modifier: Modifier, index: Int, letter: String) {
 
     if (state is State.Success) {
-        var text by remember { mutableStateOf(TextFieldValue("")) }
+        var str = "";
+        if (index == 0) {
+            str = letter
+        }
+        var text by remember { mutableStateOf(TextFieldValue(str)) }
         val focusManager = LocalFocusManager.current
+        // Gère si c'est la première case, dans le cas où ça l'est, on la désactive
+        var isEnabled = true
+        if (index == 0) {
+            isEnabled = false
 
+        }
         TextField(
             modifier = modifier,
             value = text,
-            onValueChange = { newText -> text = newText },
+            enabled = isEnabled,
+            placeholder = {
+                if (str.isEmpty()) {
+                    Text(".", style = TextStyle(textAlign = TextAlign.Center, fontSize = 16.sp))
+                }
+            },
+            onValueChange = {
+                if (it.text.length <= 1) {
+                    text = it
+                    focusManager.moveFocus(FocusDirection.Next)
+                }
+            },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(
                 onNext = { focusManager.moveFocus(FocusDirection.Next) }
             ),
-            textStyle = TextStyle(fontSize = 16.sp)
+            textStyle = TextStyle(fontSize = 16.sp, textAlign = TextAlign.Center),
+            singleLine = true,
         )
     } else if (state is State.Loading) {
         CircularProgressIndicator()
