@@ -1,6 +1,5 @@
 package com.mpwd2.momomotus.ui.pages.game
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,21 +22,30 @@ import com.mpwd2.momomotus.data.entities.State
 import com.mpwd2.momomotus.data.entities.Word
 
 @Composable
-fun InputComposable(state: State<Word>, modifier: Modifier, index: Int, letter: String) {
+fun InputComposable(
+    state: State<Word>,
+    modifier: Modifier,
+    index: Int,
+    letter: String,
+    onValidating: (String) -> Unit
+) {
 
     if (state is State.Success) {
+        // letter est la première lettre du mot que l'on affiche par défaut
+        // str est la string que l'user renseigne en remplissant les colonnes
+        // index est la position de la lettre / son input
+        // onValidating permet de
         var str = "";
-        if (index == 0) {
-            str = letter
-        }
-        var text by remember { mutableStateOf(TextFieldValue(str)) }
         val focusManager = LocalFocusManager.current
         // Gère si c'est la première case, dans le cas où ça l'est, on la désactive
         var isEnabled = true
         if (index == 0) {
+            str = letter // permet de renseigner la première lettre par défaut
+            onValidating(str)
             isEnabled = false
-
         }
+        var text by remember { mutableStateOf(TextFieldValue(str)) }
+
         TextField(
             modifier = modifier,
             value = text,
@@ -52,10 +60,15 @@ fun InputComposable(state: State<Word>, modifier: Modifier, index: Int, letter: 
                     text = it
                     focusManager.moveFocus(FocusDirection.Next)
                 }
+
+                onValidating.invoke(it.text)
+
+
             },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            // TODO : ADD PREVIOUS WHEN DELETE CONTENT
             keyboardActions = KeyboardActions(
-                onNext = { focusManager.moveFocus(FocusDirection.Next) }
+                onNext = { focusManager.moveFocus(FocusDirection.Next) },
             ),
             textStyle = TextStyle(fontSize = 16.sp, textAlign = TextAlign.Center),
             singleLine = true,
