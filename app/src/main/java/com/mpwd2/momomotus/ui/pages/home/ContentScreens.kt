@@ -34,21 +34,5 @@ fun HomeScreen() {
 }
 
 
-@Composable
-fun LeaderboardScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.purple_500))
-            .wrapContentSize(Alignment.Center)
-    )
-    {
-        Text(text = "Leaderboard View",
-            color = Color.White,
-            fontWeight = FontWeight.Bold,
-            fontSize = 25.sp,
-            textAlign = TextAlign.Center
-        )
-    }
-}
+
 
