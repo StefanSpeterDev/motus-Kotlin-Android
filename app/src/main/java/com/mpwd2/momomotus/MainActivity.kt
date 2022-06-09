@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mpwd2.momomotus.ui.navigation.NavigationKeys
 import com.mpwd2.momomotus.ui.pages.home.HomePage
+import com.mpwd2.momomotus.ui.pages.login.LoginScreen
 import com.mpwd2.momomotus.ui.pages.signup.SignUpScreen
 import com.mpwd2.momomotus.ui.theme.MomomotusTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +40,7 @@ fun NavigationApp() {
             SignUpScreen(navController= navController)
         }
         composable(NavigationKeys.Route.LOGIN) {
-           // LoginPage(navController= navController)
+            LoginScreen(navController= navController)
         }
         composable(NavigationKeys.Route.HOME) {
             HomePage(navController= navController)
