@@ -23,11 +23,12 @@ class GameViewModel @Inject constructor(private val repository: WordRepository) 
 
     private val mState = MutableStateFlow<State<Word>>(State.loading())
 
-    private lateinit var motATrouve : String
+    private lateinit var motATrouve: String
 
     val state: StateFlow<State<Word>>
         get() = mState
 
+    // Mot que l'user tape
     var currentWord: String = "";
 
     private fun getWordOfTheDay() {
@@ -44,15 +45,30 @@ class GameViewModel @Inject constructor(private val repository: WordRepository) 
     }
 
     fun checkWord() {
-        // Check si le mot est trouvé
-        if(mState.value is State.Success) {
-            if(currentWord == motATrouve) {
+        if (mState.value is State.Success) {
+            // Check si le mot est trouvé
+            if (currentWord == motATrouve) {
                 println("Found it!")
             }
+            var word = motATrouve.toList()
+            var line = currentWord.toList()
+            for(i in 0..word.size-1){
+                val motLettre = line[i]
+                val motAtrouverLettre = word[i]
+                if(motAtrouverLettre == motLettre){
+                    println( motLettre+" bien placée")
+                    //lettre bien placée
+                }
+                else if(word.contains(motLettre) && motAtrouverLettre != motLettre){
+                    //lettre dans le mot mais pas bien placée
+                    println(motLettre+"dans le mot")
+                }
+                else{
+                    println(motLettre+" pas dans le mot")
+                    //lettre pas dans mot
+                }
+            }
         }
-        // Check si une lettre est bonne
-
-        // Ignore sinon
     }
 
 }
