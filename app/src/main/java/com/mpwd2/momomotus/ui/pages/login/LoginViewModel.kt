@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mpwd2.momomotus.data.entities.State
+import com.mpwd2.momomotus.data.entities.User
 import com.mpwd2.momomotus.data.repositories.AuthRepository
 import com.mpwd2.momomotus.data.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,9 +21,9 @@ class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val mLoginState = MutableStateFlow<State<Boolean>>(State.loading())
+    private val mLoginState = MutableStateFlow<State<User>>(State.loading())
 
-    val loginState: StateFlow<State<Boolean>>
+    val loginState: StateFlow<State<User>>
         get() = mLoginState
 
     fun login(email: String, password: String) {
@@ -31,12 +32,12 @@ class LoginViewModel @Inject constructor(
                 authRepository.login(email, password).collect {
                     it?.let {
                         userRepository.getUserById(it.uid).collect {
-                           // if(it.uid) {
-                                //mLoginState.value = State.success(it)
-                           // } else {
-                             //   mLoginState.value = State.failed("failed")
-                          // }
-                            Log.d("LOGGED","$it")
+                            if (it != null) {
+                                mLoginState.value = State.success(it)
+                            } else {
+                                mLoginState.value = State.failed("failed")
+                            }
+                            Log.d("LOGGED", "$it")
 
                         }
                     }

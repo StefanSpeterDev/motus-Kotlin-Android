@@ -5,13 +5,21 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.mpwd2.momomotus.R
+import com.mpwd2.momomotus.ui.navigation.NavigationKeys
 import com.mpwd2.momomotus.ui.pages.game.GameScreen
+import com.mpwd2.momomotus.ui.pages.leaderboard.LeaderboardScreen
 import com.mpwd2.momomotus.ui.pages.profile.ProfileScreen
+import com.mpwd2.momomotus.ui.pages.profile.ProfileViewModel
+
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -21,18 +29,30 @@ fun HomePage(navController: NavHostController) {
         NavigationItem.Leaderboard,
         NavigationItem.Profile,
     );
-    val navController = rememberNavController()
-
+    val navControllerLocal = rememberNavController()
+    val viewModel: ProfileViewModel = hiltViewModel();
+    val profile = viewModel.getUser();
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { (Text(text = "La meilleure app du monde!!!!")) }
+                title = { (Text(text = "Bonjour ${profile.pseudo}")) },
+                actions = {
+                    IconButton(onClick = {
+                        Firebase.auth.signOut()
+                        navController.popBackStack(NavigationKeys.Route.LOGIN, true)
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.logout),
+                            contentDescription = "Log out"
+                        )
+                    }
+                }
             )
         },
         bottomBar = {
             BottomNavigation(backgroundColor = Color.LightGray) {
-                val navBackStackEntry = navController.currentBackStackEntryAsState()
+                val navBackStackEntry = navControllerLocal.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry.value?.destination?.route
                 items.forEach { item ->
                     BottomNavigationItem(
@@ -47,10 +67,10 @@ fun HomePage(navController: NavHostController) {
                         },
                         label = { Text(text = item.title) },
                         onClick = {
-                            navController.navigate(item.route) {
+                            navControllerLocal.navigate(item.route) {
 
                                 // s'occupe de revenir en arrière
-                                navController.graph.startDestinationRoute?.let { route ->
+                                navControllerLocal.graph.startDestinationRoute?.let { route ->
                                     popUpTo(route) {
                                         saveState = true
                                     }
@@ -65,7 +85,7 @@ fun HomePage(navController: NavHostController) {
             }
         }
     ) {
-        Navigation(navController = navController)
+        Navigation(navController = navControllerLocal)
     }
 }
 
