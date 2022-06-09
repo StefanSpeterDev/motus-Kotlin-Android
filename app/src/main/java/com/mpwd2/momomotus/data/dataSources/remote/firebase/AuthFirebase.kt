@@ -15,6 +15,8 @@ class AuthFirebase @Inject constructor() {
         return mAuth.createUserWithEmailAndPassword(email, password)
     }
 
-    //fun login(email: String, password: String): Task<AuthResult> {}
+    fun login(email: String, password: String): Task<AuthResult> {
+        return mAuth.signInWithEmailAndPassword(email, password)
+    }
 
 }
