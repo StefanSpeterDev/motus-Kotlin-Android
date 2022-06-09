@@ -6,6 +6,7 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mpwd2.momomotus.data.entities.User
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class UserFirebase @Inject constructor(){
     fun addUser(id: String, user: User): Task<Void> =
         mCollection.document(id).set(user, SetOptions.merge())
 
-    fun getAllUsers(): Flow<List<User>> = callbackFlow {  }
+    fun getAllUsers() = mCollection;
 
     fun getUserById(id: String): DocumentReference = mCollection.document(id);
     
