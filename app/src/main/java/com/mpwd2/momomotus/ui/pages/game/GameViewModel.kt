@@ -9,9 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,15 +27,16 @@ class GameViewModel @Inject constructor(private val repository: WordRepository) 
         get() = mState
 
     // Mot que l'user tape
-    var currentWord: String = "";
+    var currentWord: String = ""
 
     private fun getWordOfTheDay() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                repository.getRandomWord().collect {
-                    motATrouve = it.name
-                    mState.value = State.success(it)
-                }
+//                repository.getRandomWord().collect {
+                    val abc = Word(name="poires", wordId="12",id="12")
+                    motATrouve = abc.name
+                    mState.value = State.success(abc)
+//                }
             } catch (ex: Exception) {
                 mState.value = State.failed(ex.localizedMessage)
             }
@@ -50,8 +49,8 @@ class GameViewModel @Inject constructor(private val repository: WordRepository) 
             if (currentWord == motATrouve) {
                 println("Found it!")
             }
-            var word = motATrouve.toList()
-            var line = currentWord.toList()
+            val word = motATrouve.toList()
+            val line = currentWord.toList()
             for(i in 0..word.size-1){
                 val motLettre = line[i]
                 val motAtrouverLettre = word[i]
@@ -69,6 +68,10 @@ class GameViewModel @Inject constructor(private val repository: WordRepository) 
                 }
             }
         }
+    }
+
+    fun resetWord() {
+        currentWord = ""
     }
 
 }

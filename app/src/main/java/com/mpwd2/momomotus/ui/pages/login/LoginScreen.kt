@@ -37,9 +37,9 @@ fun isValidEmail(target: CharSequence?): Boolean {
 @Composable
 fun LoginScreen(navController: NavController) {
 
-    var mEmailTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
+    var mEmailTextFieldValue by remember { mutableStateOf(TextFieldValue("alainterieur@gmail.com")) }
     var mPasswordTextFieldValue by remember {
-        mutableStateOf(TextFieldValue())
+        mutableStateOf(TextFieldValue("momotus"))
     }
 
     // Regex

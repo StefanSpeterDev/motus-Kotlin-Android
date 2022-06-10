@@ -1,7 +1,6 @@
 package com.mpwd2.momomotus.ui.pages.game.composables
 
 //import *
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -9,7 +8,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Text
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -18,12 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerIconDefaults
 import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mpwd2.momomotus.ui.pages.game.composables.SlotState.*
 
 
@@ -32,8 +36,8 @@ enum class SlotState {
 }
 
 data class LetterSlotContent(
-    val letter: String? = null,
-    val state: SlotState
+    var letter: String? = null,
+    var state: SlotState
 )
 
 @Preview
@@ -49,32 +53,46 @@ fun LetterSlot(
     isClickable: Boolean = true,
     onClicked: () -> Unit = {}
 ) {
-    val background by animateColorAsState(getBackgroundColor(content.state))
+    var background = getBackgroundColor(content.state)
     val border by animateColorAsState(getBorderColor(content.state))
     var modifier = Modifier
-        .size(62.dp)
+        .size(50.dp)
         .background(background)
+        .border(2.dp, border)
     if (content.state != EMPTY && isClickable) {
         modifier = modifier
             .pointerHoverIcon(PointerIconDefaults.Hand)
             .clickable { onClicked() }
     }
-    modifier = modifier.border(2.dp, border)
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
     ) {
-        AnimatedContent(
-            targetState = content
-        ) { content ->
-            val color = getLetterColor(content.state)
-            Text(
-                text = content.letter?.uppercase() ?: "",
-                color = color,
-                fontWeight = FontWeight.Bold,
-                fontSize = TextUnit(32f, TextUnitType.Sp)
-            )
-        }
+
+        TextField(
+            value = TextFieldValue(content.letter?.uppercase() ?: ""),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            textStyle = TextStyle(
+                textAlign = TextAlign.Center,
+                color = getLetterColor(content.state),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.ExtraBold,
+                fontFamily = FontFamily.Monospace,
+            ),
+            singleLine = true,
+            onValueChange = {}
+        )
+//        AnimatedContent(
+//            targetState = content
+//        ) { content ->
+////            val color = getLetterColor(content.state)
+//            Text(
+//                text = content.letter?.uppercase() ?: "",
+//                color = Color.Black,
+//                fontWeight = FontWeight.Bold,
+//                fontSize = TextUnit(32f, TextUnitType.Sp)
+//            )
+//        }
     }
 }
 

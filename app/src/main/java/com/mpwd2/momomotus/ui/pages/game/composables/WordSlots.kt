@@ -1,6 +1,7 @@
 package com.mpwd2.momomotus.ui.pages.game.composables
 
 //import androidx.compose.desktop.ui.tooling.preview.Preview
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
@@ -11,12 +12,24 @@ import com.mpwd2.momomotus.ui.pages.game.composables.SlotState.*
 @Composable
 fun WordSlotsPreview() {
     WordSlots(listOf(
-        LetterSlotContent("G", GREEN),
-        LetterSlotContent("Y", YELLOW),
-        LetterSlotContent("B", BLACK),
-        LetterSlotContent("T", TYPED),
-        LetterSlotContent("E", EMPTY)
+        LetterSlotContent("P", GREEN),
+        LetterSlotContent("I", YELLOW),
+        LetterSlotContent("A", BLACK),
+        LetterSlotContent("N", TYPED),
+        LetterSlotContent("E", GREEN),
+        LetterSlotContent("", EMPTY)
     ))
+}
+
+@Composable
+fun WordSlotsGame(leMot: String) {
+    val emptyWord = List(leMot.length) { LetterSlotContent(null, TYPED) }
+
+    emptyWord.forEachIndexed { index, letterSlot ->
+        letterSlot.letter = leMot[index].toString()
+        Log.d("add letter", leMot[index].toString())
+    }
+    WordSlots(emptyWord)
 }
 
 @Composable
