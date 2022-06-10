@@ -41,11 +41,9 @@ fun RowComposable() {
                     ) {
                         if(index >= viewModel.currentWord.length) {
                             viewModel.currentWord = viewModel.currentWord.plus(it);
+                            println(viewModel.currentWord)
                         }
-                        println(viewModel.currentWord);
-
                         if(state.data.name.length - 1 == index) {
-                            println("Next line")
                            viewModel.checkWord();
                         }
                     }
