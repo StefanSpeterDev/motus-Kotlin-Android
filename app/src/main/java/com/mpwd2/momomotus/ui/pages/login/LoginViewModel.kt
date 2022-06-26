@@ -37,8 +37,6 @@ class LoginViewModel @Inject constructor(
                             } else {
                                 mLoginState.value = State.failed("failed")
                             }
-                            Log.d("LOGGED", "$it")
-
                         }
                     }
 

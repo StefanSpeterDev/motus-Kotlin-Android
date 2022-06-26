@@ -75,22 +75,19 @@ fun LoginScreen(navController: NavController) {
             )
             Box(modifier = Modifier.height(20.dp))
             TextField(value = mEmailTextFieldValue,
-                modifier = Modifier.border(width = 2.dp, color = borderColorEmail.value),
-                onValueChange = { mEmailTextFieldValue = it })
+                onValueChange = { mEmailTextFieldValue = it },
+                label = { Text("Enter E-mail") },
+
+                )
             Box(modifier = Modifier.height(5.dp))
             TextField(
                 value = mPasswordTextFieldValue,
-                modifier = Modifier.border(width = 2.dp, color = borderColorPassword.value),
-                onValueChange = { mPasswordTextFieldValue = it })
-            Box(modifier = Modifier.height(5.dp))
-            TextField(
-                value = password,
-                modifier = Modifier.border(width = 2.dp, color = borderColorPassword.value),
-                onValueChange = { password = it },
+                onValueChange = { mPasswordTextFieldValue = it },
                 label = { Text("Enter password") },
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
+            Box(modifier = Modifier.height(5.dp))
             TextButton(onClick = {
                 val isEmailOK = isValidEmail(mEmailTextFieldValue.text)
                 val isPassOK = regexPassword.matches(password)
@@ -120,6 +117,11 @@ fun LoginScreen(navController: NavController) {
                 )
             }) {
                 Text(text = "Se connecter ->")
+            }
+            TextButton(onClick = {
+                navController.navigate(NavigationKeys.Route.SIGN_UP)
+            }) {
+                Text(text = "S'inscrire ->")
             }
         }
     }

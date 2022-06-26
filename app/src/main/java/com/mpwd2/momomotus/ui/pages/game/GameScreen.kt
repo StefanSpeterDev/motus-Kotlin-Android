@@ -17,14 +17,17 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mpwd2.momomotus.R
 import com.mpwd2.momomotus.data.entities.State
+import com.mpwd2.momomotus.ui.pages.game2.GameViewModel2
 
 @Composable
 fun GameScreen() {
 
-    val viewModel: GameViewModel = hiltViewModel()
-    val state = viewModel.state.collectAsState().value // récupère valeur du state
-
-    if(state is State.Success) {
+    /*val viewModel: GameViewModel = hiltViewModel()
+    val state = viewModel.state.collectAsState().value // récupère valeur du state*/
+    val viewModel: GameViewModel2 = hiltViewModel()
+    val state = viewModel.state.collectAsState().value
+    //if(state is State.Success) {
+    if(true){
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -32,11 +35,14 @@ fun GameScreen() {
         ) {
             Row() {
                 Text(text = "Mot à deviner: ")
-                Text(text = state.data.name,
+                Text(text = "state.data.name",
                     fontWeight = FontWeight.Bold)
             }
             Box(modifier = Modifier.padding(10.dp))
-            BuildGame()
+            RowComposable(
+                vm = viewModel,
+                nbRow = 6, word = "poule"
+            )
         }
     } else if (state is State.Loading) {
         CircularProgressIndicator()
@@ -46,7 +52,7 @@ fun GameScreen() {
                 .fillMaxSize()
                 .wrapContentSize(Alignment.Center)
         ) {
-            Text(text = "Erreur api",
+            Text(text = "Erreur api trying to build the game",
                 fontWeight = FontWeight.Bold)
         }
     }
@@ -59,7 +65,4 @@ fun GameScreen() {
     Chaque textfield possède un state (init, vide, invalide, valide, isOk, isOkButWrongPlace)
 */
 
-@Composable
-fun BuildGame() {
-    RowComposable()
-}
+
