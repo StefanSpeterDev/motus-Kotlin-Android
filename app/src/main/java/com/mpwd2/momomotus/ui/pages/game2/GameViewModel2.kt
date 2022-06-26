@@ -40,13 +40,13 @@ class GameViewModel2 @Inject constructor(private val repository: WordRepository)
 
     var letterTab: MutableList<MutableList<Letter>> = mutableListOf()
 
-    fun initList(){
+    private fun initList(){
         for(y in 1 until 7){
             var listLetter : MutableList<Letter> = mutableListOf()
             for(i in 0 until motAtrouve.toList().size){
-                if(y == 1)listLetter.add(Letter(Color.Blue, false, ""))else listLetter.add(
+                if(y == 1)listLetter.add(Letter(Color.Cyan, false, ""))else listLetter.add(
                     Letter(
-                        Color.Blue, true, "")
+                        Color.Cyan, true, "")
                 )
             }
             letterTab.add(listLetter)
@@ -58,15 +58,12 @@ class GameViewModel2 @Inject constructor(private val repository: WordRepository)
             if(motAtrouve.length == currentWord.length){
                 if(motAtrouve == currentWord){
                     println("win")
-                    val text = "Vous avez gagné !!"
+                    val text = "Bravo, vous avez trouvé le mot !"
                     val duration = 1200
                     val toast = Toast.makeText(mContext, text, duration)
                     toast.show()
                 }else{
                     checkLetter(row)
-                    //mStateTest.value = State.success(letterTab)
-                    println("nextrow")
-                    //letterTab[row][letter] = Letter(Color.Red, false)
                     currentWord = ""
                 }
             }
@@ -74,8 +71,8 @@ class GameViewModel2 @Inject constructor(private val repository: WordRepository)
         }
     }
 
-    fun checkLetter(row: Int){
-        println("row:" +row.toString())
+    private fun checkLetter(row: Int){
+        println("row:$row")
         var word = motAtrouve.toList()
         var line = currentWord.toList()
         for(i in 0..word.size-1){
@@ -88,7 +85,7 @@ class GameViewModel2 @Inject constructor(private val repository: WordRepository)
                 letterTab[row][i] = Letter(Color(0xFFC07504), false, motLettre.toString())
             }
             else{
-                letterTab[row][i] = Letter(Color.Blue, false, motLettre.toString())
+                letterTab[row][i] = Letter(Color.Cyan, false, motLettre.toString())
                 println(motLettre+" pas dans le mot")
             }
         }

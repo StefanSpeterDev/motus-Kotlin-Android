@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -44,11 +43,6 @@ fun InputComposable(
 
     if (index == 0) onValidating(letter)
 
-    //if (state is State.Success) {
-    // letter est la première lettre du mot que l'on affiche par défaut
-    // str est la string que l'user renseigne en remplissant les colonnes
-    // index est la position de la lettre / son input
-    // onValidating permet de
     var str = "";
     val focusManager = LocalFocusManager.current
     Box(

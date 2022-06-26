@@ -22,7 +22,7 @@ import com.mpwd2.momomotus.ui.pages.game2.GameViewModel2
 @Composable
 fun RowComposable(nbRow: Int, word: String, vm: GameViewModel2) {
 
-    val viewModel: GameViewModel = hiltViewModel()
+    val viewModel: GameViewModel2 = hiltViewModel()
     val state = viewModel.state.collectAsState().value // récupère valeur du state
     val context = LocalContext.current
 
@@ -35,7 +35,7 @@ fun RowComposable(nbRow: Int, word: String, vm: GameViewModel2) {
             ) {
                 // Génère les input correspondant au mot choisi
                 word.forEachIndexed { index, it ->
-                    var color = Color.Blue
+                    var color = Color.Cyan
                     var enabled = true
                     if (index == 0) {
                         enabled = false
@@ -48,7 +48,7 @@ fun RowComposable(nbRow: Int, word: String, vm: GameViewModel2) {
                         enabled = letter.enabled
                         lett = letter.letter
                     } else {
-                        color = Color.Blue
+                        color = Color.Cyan
                     }
                     InputComposable(
                         row = i,

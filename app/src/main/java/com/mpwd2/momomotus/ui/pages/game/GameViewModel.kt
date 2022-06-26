@@ -1,4 +1,4 @@
-package com.mpwd2.momomotus.ui.pages.game
+/*package com.mpwd2.momomotus.ui.pages.game
 
 import android.content.Context
 import android.widget.Toast
@@ -47,15 +47,22 @@ class GameViewModel @Inject constructor(private val repository: WordRepository) 
     var currentRow: Int = 0
 
 
-    fun initList(){
-        for(y in 1 until 7){
-            var listLetter : MutableList<Letter> = mutableListOf()
-            for(i in 0 until motATrouve.toList().size){
-                if(y == 1)listLetter.add(Letter(Color.Blue, false, ""))else listLetter.add(Letter(Color.Blue, true, ""))
+    private fun initList() {
+        for (y in 1 until 7) {
+            var listLetter: MutableList<Letter> = mutableListOf()
+            for (i in 0 until motATrouve.toList().size) {
+                if (y == 1) listLetter.add(
+                    Letter(
+                        Color.Cyan,
+                        false,
+                        ""
+                    )
+                ) else listLetter.add(Letter(Color.Cyan, true, ""))
             }
             letterTab.add(listLetter)
         }
     }
+
     private fun getWordOfTheDay() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -93,16 +100,16 @@ class GameViewModel @Inject constructor(private val repository: WordRepository) 
         //}
     }*/
 
-    fun checkWin(row: Int, mContext: Context){
-        if(mState.value is State.Success){
-            if(motATrouve.length == currentWord.length){
-                if(motATrouve == currentWord){
+    fun checkWin(row: Int, mContext: Context) {
+        if (mState.value is State.Success) {
+            if (motATrouve.length == currentWord.length) {
+                if (motATrouve == currentWord) {
                     println("win")
                     val text = "Vous avez gagné !!"
                     val duration = 1200
                     val toast = Toast.makeText(mContext, text, duration)
                     toast.show()
-                }else{
+                } else {
                     checkLetter(row)
                     //mStateTest.value = State.success(letterTab)
                     println("nextrow")
@@ -138,26 +145,24 @@ class GameViewModel @Inject constructor(private val repository: WordRepository) 
         }
     }
 
-    fun checkLetter(row: Int){
-        println("row:" +row.toString())
+    fun checkLetter(row: Int) {
+        println("row:" + row.toString())
         var word = motATrouve.toList()
         var line = currentWord.toList()
-        for(i in 0..word.size-1){
+        for (i in 0..word.size - 1) {
             val motLettre = line[i]
             val motAtrouverLettre = word[i]
-            if(motAtrouverLettre == motLettre){
+            if (motAtrouverLettre == motLettre) {
                 letterTab[row][i] = Letter(Color.Red, false, motLettre.toString())
-            }
-            else if(word.contains(motLettre) && motAtrouverLettre != motLettre){
+            } else if (word.contains(motLettre) && motAtrouverLettre != motLettre) {
                 letterTab[row][i] = Letter(Color.Yellow, false, motLettre.toString())
-            }
-            else{
+            } else {
                 letterTab[row][i] = Letter(Color.Blue, false, motLettre.toString())
-                println(motLettre+" pas dans le mot")
+                println(motLettre + " pas dans le mot")
             }
         }
         mStateTest.value = State.success(letterTab)
     }
 
 
-}
+}*/
